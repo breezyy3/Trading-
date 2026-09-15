@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>BitForge | Live BTC & Digital Assets Trading</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+<script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}
+  body{background:#0b0e14;color:#e9edf5;line-height:1.5;overflow-x:hidden}
+  .app{display:flex;flex-direction:column;min-height:100vh}
+
+  /* ================= NAVBAR ================= */
+  .navbar{display:flex;align-items:center;justify-content:space-between;padding:0 28px;height:72px;background:#0f131c;border-bottom:1px solid #1e2633;position:sticky;top:0;z-index:20}
+  .logo-area{display:flex;align-items:center;gap:10px}
+  .logo-icon{background:linear-gradient(135deg,#f7931a 0%,#ffb347 100%);width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#0b0e14;font-weight:700}
+  .logo-text{font-weight:700;font-size:1.5rem;letter-spacing:-.5px;background:linear-gradient(to right,#fff,#c0c9d9);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+  .nav-links{display:flex;gap:28px;font-weight:500;color:#9aa8bb}
+  .nav-links a{text-decoration:none;color:inherit;font-size:.95rem;transition:color .15s}
+  .nav-links a:hover,.nav-links a.active{color:#fff}
+  .nav-links a.active{border-bottom:2px solid #f7931a;padding-bottom:4px}
+  .user-actions{display:flex;align-items:center;gap:18px}
+  .balance-chip{background:#1a212e;padding:8px 16px;border-radius:40px;font-size:.9rem;font-weight:500;border:1px solid #2b3648;color:#d0dae8}
+  .balance-chip i{color:#f7931a;margin-right:6px}
+  .btn-primary{background:linear-gradient(135deg,#f7931a,#e07c0c);border:none;color:#0b0e14;font-weight:700;padding:10px 22px;border-radius:40px;font-size:.9rem;display:flex;align-items:center;gap:8px;cursor:pointer;transition:all .15s;box-shadow:0 8px 20px -6px rgba(247,147,26,.3)}
+  .btn-primary:hover{background:#ffa52e;transform:translateY(-1px)}
+
+  /* ================= LAYOUT ================= */
+  .main-grid{display:grid;grid-template-columns:1fr 340px;gap:20px;padding:24px 28px;max-width:1600px;margin:0 auto;width:100%}
+  .left-col{display:flex;flex-direction:column;gap:20px;min-width:0}
+  .right-col{display:flex;flex-direction:column;gap:20px}
+
+  /* ================= STATS ================= */
+  .market-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  .stat-card{background:#0f131c;border-radius:18px;padding:18px 20px;border:1px solid #1e2633;transition:border .15s}
+  .stat-card:hover{border-color:#2d394d}
+  .stat-label{font-size:.8rem;text-transform:uppercase;letter-spacing:.5px;color:#7a889b;margin-bottom:8px;display:flex;justify-content:space-between}
+  .stat-value{font-size:1.7rem;font-weight:700;color:#fff;display:flex;align-items:baseline;gap:6px;border-radius:6px;transition:background-color .3s}
+  .stat-change{font-size:.9rem;font-weight:600;margin-left:8px}
+  .positive{color:#2cc98a}
+  .negative{color:#f6465d}
+  .small-icon{font-size:1rem;color:#4d5a6d}
+  .flash-up{animation:flashUp .6s ease-out}
+  .flash-down{animation:flashDown .6s ease-out}
+  @keyframes flashUp{0%{background-color:rgba(44,201,138,.22)}100%{background-color:transparent}}
+  @keyframes flashDown{0%{background-color:rgba(246,70,93,.22)}100%{background-color:transparent}}
+
+  /* ================= LIVE BADGE ================= */
+  .live-indicator{display:inline-flex;align-items:center;gap:6px;font-size:.75rem;color:#2cc98a;font-weight:600;margin-left:10px}
+  .live-dot{width:8px;height:8px;border-radius:50%;background:#2cc98a;animation:pulse 1.5s infinite}
+  @keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(44,201,138,.7)}50%{opacity:.6;box-shadow:0 0 0 6px rgba(44,201,138,0)}}
+
+  /* ================= CHART ================= */
+  .chart-container{background:#0f131c;border-radius:24px;padding:22px 24px 18px;border:1px solid #1e2633}
+  .chart-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:10px}
+  .asset-title{display:flex;align-items:center;gap:14px}
+  .btc-icon{background:#f7931a20;width:44px;height:44px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:26px;color:#f7931a}
+  .asset-name h3{font-size:1.3rem;font-weight:700;letter-spacing:-.3px;display:flex;align-items:center;gap:10px}
+  .asset-name span{font-size:.85rem;color:#7a889b;font-weight:500}
+  .chart-tabs{display:flex;gap:8px;background:#151c28;padding:4px;border-radius:40px}
+  .chart-tabs button{background:transparent;border:none;color:#98a9c0;font-weight:600;font-size:.8rem;padding:8px 16px;border-radius:40px;cursor:pointer;transition:all .15s}
+  .chart-tabs button.active{background:#232e3f;color:#fff}
+  #tvchart{width:100%;height:260px}
+
+  /* ================= DEPTH ================= */
+  .market-depth{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  .order-book,.recent-trades{background:#0f131c;border-radius:20px;padding:20px 20px 16px;border:1px solid #1e2633;min-width:0}
+  .section-title{display:flex;justify-content:space-between;font-size:.9rem;font-weight:600;color:#b8c4d6;margin-bottom:18px;letter-spacing:.3px}
+  .order-row,.trade-row{display:flex;justify-content:space-between;font-size:.85rem;padding:6px 4px;border-bottom:1px solid #1a212e}
+  .order-row:last-child,.trade-row:last-child{border-bottom:none}
+  .price-green{color:#2cc98a;font-weight:500}
+  .price-red{color:#f6465d;font-weight:500}
+  .amount{color:#b0bed2}
+
+  /* ================= TRADE PANEL ================= */
+  .trade-panel{background:#0f131c;border-radius:24px;padding:24px;border:1px solid #1e2633}
+  .panel-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}
+  .panel-header h3{font-weight:600;font-size:1.1rem}
+  .buy-sell-toggle{display:flex;gap:6px;background:#151c28;border-radius:40px;padding:4px}
+  .buy-sell-toggle button{background:transparent;border:none;color:#9aa8bb;font-weight:700;font-size:.8rem;padding:8px 22px;border-radius:40px;cursor:pointer;transition:all .15s}
+  .buy-sell-toggle button.active-buy{background:#2cc98a20;color:#2cc98a;border:1px solid #2cc98a50}
+  .buy-sell-toggle button.active-sell{background:#f6465d20;color:#f6465d;border:1px solid #f6465d50}
+  .input-group{margin-bottom:20px}
+  .input-label{display:flex;justify-content:space-between;font-size:.8rem;color:#8b99ae;margin-bottom:8px}
+  .input-field{display:flex;background:#151c28;border-radius:14px;border:1px solid #263040;padding:0 16px;align-items:center;transition:border .15s}
+  .input-field:focus-within{border-color:#f7931a}
+  .input-field input{background:transparent;border:none;padding:14px 0;width:100%;color:#fff;font-weight:500;font-size:1rem;outline:none;font-family:inherit}
+  .input-field span{color:#8b99ae;font-size:.9rem;font-weight:500;white-space:nowrap;margin-left:8px}
+  .quick-percent{display:flex;gap:8px;margin-top:10px}
+  .quick-percent button{background:#151c28;border:1px solid #263040;color:#a6b3c8;font-size:.75rem;font-weight:600;padding:6px 0;border-radius:30px;flex:1;cursor:pointer;transition:all .1s}
+  .quick-percent button:hover{background:#1f2a3a;color:#fff}
+  .action-btn{width:100%;padding:16px;border-radius:40px;font-weight:700;font-size:1rem;border:none;cursor:pointer;transition:all .15s;margin-top:8px}
+  .buy-btn{background:#2cc98a;color:#0b0e14;box-shadow:0 8px 20px -6px #2cc98a80}
+  .sell-btn{background:#f6465d;color:#fff;box-shadow:0 8px 20px -6px #f6465d80}
+  .buy-btn:hover{background:#3eda99;transform:translateY(-2px)}
+  .sell-btn:hover{background:#ff5b70;transform:translateY(-2px)}
+  .balance-info{display:flex;justify-content:space-between;font-size:.8rem;color:#7a889b;margin-top:18px;padding-top:10px;border-top:1px solid #1e2633}
+
+  /* ================= WATCHLIST ================= */
+  .watchlist{background:#0f131c;border-radius:24px;padding:20px;border:1px solid #1e2633}
+  .watchlist-item{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #1a212e}
+  .watchlist-item:last-child{border-bottom:none}
+  .asset-info{display:flex;align-items:center;gap:12px}
+  .asset-icon{width:34px;height:34px;border-radius:10px;background:#1a212e;display:flex;align-items:center;justify-content:center;font-size:1rem}
+  .asset-symbol{font-weight:600;font-size:.95rem}
+  .asset-name-small{font-size:.7rem;color:#7a889b}
+  .asset-price{text-align:right}
+  .price-value{font-weight:600;font-size:.95rem;border-radius:4px;padding:0 4px;transition:background-color .3s}
+  .price-change{font-size:.75rem;font-weight:500}
+
+  /* ================= TOAST ================= */
+  .toast{position:fixed;bottom:30px;right:30px;background:#1a212e;color:#e9edf5;padding:14px 24px;border-radius:50px;border-left:4px solid #f7931a;box-shadow:0 10px 30px rgba(0,0,0,.5);font-weight:500;z-index:999;transition:opacity .3s,transform .3s}
+
+  /* ================= RESPONSIVE ================= */
+  @media (max-width:1100px){
+    .main-grid{grid-template-columns:1fr}
+    .market-stats{grid-template-columns:repeat(2,1fr)}
+  }
+  @media (max-width:700px){
+    .navbar{padding:0 14px;height:60px}
+    .logo-text{font-size:1.2rem}
+    .nav-links{display:none}
+    .balance-chip{display:none}
+    .btn-primary{padding:8px 14px;font-size:.8rem}
+    .main-grid{padding:14px}
+    .market-stats{grid-template-columns:1fr}
+    .market-depth{grid-template-columns:1fr}
+    .stat-value{font-size:1.4rem}
+    #tvchart{height:200px}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <!-- ============ NAVBAR ============ -->
+  <header class="navbar">
+    <div class="logo-area">
+      <div class="logo-icon">₿</div>
+      <div class="logo-text">BitForge</div>
+    </div>
+    <nav class="nav-links">
+      <a href="#" class="active">Trade</a>
+      <a href="#">Markets</a>
+      <a href="#">Portfolio</a>
+      <a href="#">Earn</a>
+    </nav>
+    <div class="user-actions">
+      <div class="balance-chip"><i class="fas fa-wallet"></i> $24,580.42</div>
+      <button class="btn-primary"><i class="fas fa-bolt"></i> Deposit</button>
+    </div>
+  </header>
+
+  <!-- ============ MAIN ============ -->
+  <div class="main-grid">
+    <!-- LEFT COLUMN -->
+    <div class="left-col">
+      <!-- Market Stats -->
+      <div class="market-stats">
+        <div class="stat-card">
+          <div class="stat-label">BTC/USDT <i class="fas fa-chevron-down small-icon"></i></div>
+          <div class="stat-value" id="btcPriceCard">
+            <span id="btcPrice">$--,---.--</span>
+            <span class="stat-change positive" id="btcChange">+0.00%</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">24h Volume <i class="fas fa-chart-simple small-icon"></i></div>
+          <div class="stat-value" id="btcVolume">$--.-B</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">24h High <i class="fas fa-arrow-up small-icon"></i></div>
+          <div class="stat-value" id="btcHigh">$--,---</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">24h Low <i class="fas fa-arrow-down small-icon"></i></div>
+          <div class="stat-value" id="btcLow">$--,---</div>
+        </div>
+      </div>
+
+      <!-- Live Chart -->
+      <div class="chart-container">
+        <div class="chart-header">
+          <div class="asset-title">
+            <div class="btc-icon">₿</div>
+            <div class="asset-name">
+              <h3>Bitcoin <span>BTC/USDT</span>
+                <span class="live-indicator"><span class="live-dot"></span>LIVE</span>
+              </h3>
+            </div>
+          </div>
+          <div class="chart-tabs" id="chartTabs">
+            <button data-interval="1m" class="active">1m</button>
+            <button data-interval="5m">5m</button>
+            <button data-interval="1h">1H</button>
+            <button data-interval="1d">1D</button>
+          </div>
+        </div>
+        <div id="tvchart"></div>
+      </div>
+
+      <!-- Order Book & Recent Trades -->
+      <div class="market-depth">
+        <div class="order-book">
+          <div class="section-title">
+            <span>Order Book</span>
+            <span>BTC (Amount)</span>
+          </div>
+        </div>
+        <div class="recent-trades">
+          <div class="section-title">
+            <span>Recent Trades</span>
+            <span>Time</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <div class="right-col">
+      <!-- Trade Panel -->
+      <div class="trade-panel">
+        <div class="panel-header">
+          <h3>Trade</h3>
+          <div class="buy-sell-toggle">
+            <button class="active-buy" id="buyTab">Buy</button>
+            <button id="sellTab">Sell</button>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <div class="input-label">
+            <span>Amount</span>
+            <span>Balance: 0.3854 BTC</span>
+          </div>
+          <div class="input-field">
+            <input type="text" placeholder="0.00" value="0.025" id="amountInput" />
+            <span>BTC</span>
+          </div>
+          <div class="quick-percent">
+            <button data-pct="25">25%</button>
+            <button data-pct="50">50%</button>
+            <button data-pct="75">75%</button>
+            <button data-pct="100">100%</button>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <div class="input-label"><span>Price</span><span>Market</span></div>
+          <div class="input-field">
+            <input type="text" placeholder="Market price" id="priceInput" readonly />
+            <span>USDT</span>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <div class="input-label">
+            <span>Total</span>
+            <span id="totalApprox">≈ $0.00</span>
+          </div>
+          <div class="input-field">
+            <input type="text" placeholder="0.00" id="totalInput" readonly />
+            <span>USDT</span>
+          </div>
+        </div>
+
+        <button class="action-btn buy-btn" id="actionBtn">
+          <i class="fas fa-arrow-up"></i> Buy BTC
+        </button>
+
+        <div class="balance-info">
+          <span>Available</span>
+          <span>$24,580.42</span>
+        </div>
+      </div>
+
+      <!-- Watchlist -->
+      <div class="watchlist">
+        <div class="section-title">
+          <span>Watchlist</span>
+          <span><i class="fas fa-plus small-icon"></i></span>
+        </div>
+
+        <div class="watchlist-item" data-symbol="BTCUSDT">
+          <div class="asset-info">
+            <div class="asset-icon" style="color:#f7931a;">₿</div>
+            <div><div class="asset-symbol">BTC</div><div class="asset-name-small">Bitcoin</div></div>
+          </div>
+          <div class="asset-price">
+            <div class="price-value">$--,---</div>
+            <div class="price-change positive">+0.00%</div>
+          </div>
+        </div>
+
+        <div class="watchlist-item" data-symbol="ETHUSDT">
+          <div class="asset-info">
+            <div class="asset-icon" style="color:#627eea;">Ξ</div>
+            <div><div class="asset-symbol">ETH</div><div class="asset-name-small">Ethereum</div></div>
+          </div>
+          <div class="asset-price">
+            <div class="price-value">$-,---</div>
+            <div class="price-change positive">+0.00%</div>
+          </div>
+        </div>
+
+        <div class="watchlist-item" data-symbol="SOLUSDT">
+          <div class="asset-info">
+            <div class="asset-icon" style="color:#14b8a6;">◈</div>
+            <div><div class="asset-symbol">SOL</div><div class="asset-name-small">Solana</div></div>
+          </div>
+          <div class="asset-price">
+            <div class="price-value">$---.--</div>
+            <div class="price-change positive">+0.00%</div>
+          </div>
+        </div>
+
+        <div class="watchlist-item" data-symbol="BNBUSDT">
+          <div class="asset-info">
+            <div class="asset-icon" style="color:#f0b90b;">BNB</div>
+            <div><div class="asset-symbol">BNB</div><div class="asset-name-small">Binance Coin</div></div>
+          </div>
+          <div class="asset-price">
+            <div class="price-value">$---.--</div>
+            <div class="price-change positive">+0.00%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ============ CONFIG ============ */
+  const SYMBOL = 'BTCUSDT';
+  const REST_BASE = 'https://api.binance.com/api/v3';
+  const WS_BASE = 'wss://stream.binance.com:9443/ws';
+  const WS_COMBINED = 'wss://stream.binance.com:9443/stream?streams=';
+
+  /* ============ STATE ============ */
+  let lastPrice = 0;
+  let currentInterval = '1m';
+  let candleSeries = null;
+  let chart = null;
+  const sockets = { kline: null, depth: null, trades: null, ticker: null, watchlist: null };
+  let lastDepthRender = 0;
+
+  /* ============ HELPERS ============ */
+  const fmt = (n, dec = 2) => Number(n).toLocaleString('en-US', { minimumFractionDigits: dec, maximumFractionDigits: dec });
+  const fmtUSD = (n, dec = 2) => '$' + fmt(n, dec);
+
+  function flash(el, direction) {
+    if (!el) return;
+    el.classList.remove('flash-up', 'flash-down');
+    void el.offsetWidth;
+    el.classList.add(direction === 'up' ? 'flash-up' : 'flash-down');
+    setTimeout(() => el.classList.remove('flash-up', 'flash-down'), 700);
+  }
+
+  function showToast(message, color = '#f7931a') {
+    const t = document.createElement('div');
+    t.className = 'toast';
+    t.style.borderLeftColor = color;
+    t.textContent = message;
+    document.body.appendChild(t);
+    setTimeout(() => {
+      t.style.opacity = '0';
+      t.style.transform = 'translateY(20px)';
+      setTimeout(() => t.remove(), 350);
+    }, 2400);
+  }
+
+  function safeClose(ws) { try { ws && ws.readyState <= 1 && ws.close(); } catch (e) {} }
+
+  /* ============ CHART ============ */
+  function initChart(retries = 0) {
+    const container = document.getElementById('tvchart');
+    if (!container) return;
+
+    if (typeof LightweightCharts === 'undefined') {
+      if (retries < 10) return setTimeout(() => initChart(retries + 1), 400);
+      console.warn('Chart library failed to load');
+      return;
+    }
+
+    chart = LightweightCharts.createChart(container, {
+      layout: { background: { color: '#0f131c' }, textColor: '#b8c4d6', fontSize: 11 },
+      grid: { vertLines: { color: '#1a212e' }, horzLines: { color: '#1a212e' } },
+      timeScale: { borderColor: '#1e2633', timeVisible: true, secondsVisible: false },
+      rightPriceScale: { borderColor: '#1e2633', scaleMargins: { top: 0.1, bottom: 0.1 } },
+      crosshair: { mode: LightweightCharts.CrosshairMode.Normal }
+    });
+
+    candleSeries = chart.addCandlestickSeries({
+      upColor: '#2cc98a', downColor: '#f6465d',
+      borderUpColor: '#2cc98a', borderDownColor: '#f6465d',
+      wickUpColor: '#2cc98a', wickDownColor: '#f6465d'
+    });
+
+    loadKlineHistory(currentInterval);
+    startKlineStream(currentInterval);
+
+    window.addEventListener('resize', () => chart.applyOptions({ width: container.clientWidth }));
+  }
+
+  async function loadKlineHistory(interval) {
+    try {
+      const res = await fetch(`${REST_BASE}/klines?symbol=${SYMBOL}&interval=${interval}&limit=300`);
+      const rows = await res.json();
+      candleSeries.setData(rows.map(r => ({
+        time: r[0] / 1000,
+        open: +r[1], high: +r[2], low: +r[3], close: +r[4]
+      })));
+      chart.timeScale().fitContent();
+    } catch (e) { console.warn('kline history failed', e); }
+  }
+
+  function startKlineStream(interval) {
+    safeClose(sockets.kline);
+    const ws = sockets.kline = new WebSocket(`${WS_BASE}/${SYMBOL.toLowerCase()}@kline_${interval}`);
+
+    ws.onmessage = (event) => {
+      try {
+        const data = JSON.parse(event.data);
+        const k = data.k;
+        if (candleSeries && k) {
+          candleSeries.update({
+            time: k.t / 1000,
+            open: +k.o, high: +k.h, low: +k.l, close: +k.c
+          });
+        }
+      } catch (e) { console.warn('kline stream parse failed', e); }
+    };
+
+    ws.onerror = () => console.warn('Kline WebSocket error');
+  }
+
+  /* ============ TICKER / STATS ============ */
+  function startTickerStream() {
+    safeClose(sockets.ticker);
+    const ws = sockets.ticker = new WebSocket(`${WS_BASE}/${SYMBOL.toLowerCase()}@ticker`);
+
+    ws.onmessage = (event) => {
+      try {
+        const t = JSON.parse(event.data);
+        const price = +t.c;
+        const changePct = +t.P;
+        const high = +t.h;
+        const low = +t.l;
+        const volume = +t.q;
+
+        const priceEl = document.getElementById('btcPrice');
+        const changeEl = document.getElementById('btcChange');
+        const cardEl = document.getElementById('btcPriceCard');
+        const priceInput = document.getElementById('priceInput');
+
+        if (priceEl) {
+          priceEl.textContent = fmtUSD(price);
+          if (lastPrice && price !== lastPrice) {
+            flash(cardEl, price > lastPrice ? 'up' : 'down');
+          }
+          lastPrice = price;
+        }
+
+        if (changeEl) {
+          changeEl.textContent = (changePct >= 0 ? '+' : '') + changePct.toFixed(2) + '%';
+          changeEl.className = 'stat-change ' + (changePct >= 0 ? 'positive' : 'negative');
+        }
+
+        const volEl = document.getElementById('btcVolume');
+        const highEl = document.getElementById('btcHigh');
+        const lowEl = document.getElementById('btcLow');
+        if (volEl) volEl.textContent = '$' + (volume / 1e9).toFixed(2) + 'B';
+        if (highEl) highEl.textContent = '$' + fmt(high, 0);
+        if (lowEl) lowEl.textContent = '$' + fmt(low, 0);
+
+        if (priceInput) priceInput.value = fmt(price, 2);
+        recalcTotal();
+      } catch (e) { console.warn('ticker parse failed', e); }
+    };
+
+    ws.onerror = () => console.warn('Ticker WebSocket error');
+  }
+
+  /* ============ ORDER BOOK ============ */
+  function startDepthStream() {
+    safeClose(sockets.depth);
+    const ws = sockets.depth = new WebSocket(`${WS_BASE}/${SYMBOL.toLowerCase()}@depth20@1000ms`);
+
+    ws.onmessage = (event) => {
+      const now = Date.now();
+      if (now - lastDepthRender < 300) return;
+      lastDepthRender = now;
+
+      try {
+        const data = JSON.parse(event.data);
+        renderOrderBook(data.bids || [], data.asks || []);
+      } catch (e) { console.warn('depth parse failed', e); }
+    };
+
+    ws.onerror = () => console.warn('Depth WebSocket error');
+  }
+
+  function renderOrderBook(bids, asks) {
+    const bookEl = document.querySelector('.order-book');
+    if (!bookEl) return;
+
+    const rows = [];
+    asks.slice(0, 8).reverse().forEach(([price, amount]) => {
+      rows.push(`<div class="order-row"><span class="price-red">${fmt(+price, 2)}</span><span class="amount">${(+amount).toFixed(4)}</span></div>`);
+    });
+    bids.slice(0, 8).forEach(([price, amount]) => {
+      rows.push(`<div class="order-row"><span class="price-green">${fmt(+price, 2)}</span><span class="amount">${(+amount).toFixed(4)}</span></div>`);
+    });
+
+    bookEl.innerHTML = `
+      <div class="section-title"><span>Order Book</span><span>BTC (Amount)</span></div>
+      ${rows.join('')}
+    `;
+  }
+
+  /* ============ RECENT TRADES ============ */
+  function startTradesStream() {
+    safeClose(sockets.trades);
+    const ws = sockets.trades = new WebSocket(`${WS_BASE}/${SYMBOL.toLowerCase()}@trade`);
+    const tradesBuffer = [];
+
+    ws.onmessage = (event) => {
+      try {
+        const t = JSON.parse(event.data);
+        const price = +t.p;
+        const qty = +t.q;
+        const isBuyerMaker = t.m;
+        const time = new Date(t.T).toLocaleTimeString('en-US', { hour12: false });
+
+        tradesBuffer.unshift({ price, qty, isBuyerMaker, time });
+        if (tradesBuffer.length > 12) tradesBuffer.pop();
+
+        renderTrades(tradesBuffer);
+      } catch (e) { console.warn('trade parse failed', e); }
+    };
+
+    ws.onerror = () => console.warn('Trades WebSocket error');
+  }
+
+  function renderTrades(trades) {
+    const el = document.querySelector('.recent-trades');
+    if (!el) return;
+
+    const rows = trades.map(t => `
+      <div class="trade-row">
+        <span class="${t.isBuyerMaker ? 'price-red' : 'price-green'}">${fmt(t.price, 2)}</span>
+        <span class="amount">${t.qty.toFixed(4)}</span>
+        <span class="amount">${t.time}</span>
+      </div>
+    `).join('');
+
+    el.innerHTML = `
+      <div class="section-title"><span>Recent Trades</span><span>Time</span></div>
+      ${rows}
+    `;
+  }
+
+  /* ============ WATCHLIST ============ */
+  function startWatchlistStream() {
+    safeClose(sockets.watchlist);
+    const symbols = ['btcusdt', 'ethusdt', 'solusdt', 'bnbusdt'];
+    const streams = symbols.map(s => `${s}@ticker`).join('/');
+    const ws = sockets.watchlist = new WebSocket(WS_COMBINED + streams);
+
+    ws.onmessage = (event) => {
+      try {
+        const msg = JSON.parse(event.data);
+        const t = msg.data;
+        if (!t) return;
+
+        const symbol = t.s;
+        const price = +t.c;
+        const changePct = +t.P;
+
+        const item = document.querySelector(`.watchlist-item[data-symbol="${symbol}"]`);
+        if (!item) return;
+
+        const priceEl = item.querySelector('.price-value');
+        const changeEl = item.querySelector('.price-change');
+
+        if (priceEl) {
+          const dec = price < 10 ? 2 : (price < 1000 ? 2 : 0);
+          const oldText = priceEl.textContent;
+          priceEl.textContent = '$' + fmt(price, dec);
+          if (oldText !== priceEl.textContent && oldText.indexOf('-') === -1) {
+            const oldVal = parseFloat(oldText.replace(/[^0-9.]/g, ''));
+            flash(priceEl, price >= oldVal ? 'up' : 'down');
+          }
+        }
+        if (changeEl) {
+          changeEl.textContent = (changePct >= 0 ? '+' : '') + changePct.toFixed(2) + '%';
+          changeEl.className = 'price-change ' + (changePct >= 0 ? 'positive' : 'negative');
+        }
+      } catch (e) { console.warn('watchlist parse failed', e); }
+    };
+
+    ws.onerror = () => console.warn('Watchlist WebSocket error');
+  }
+
+  /* ============ TRADE PANEL LOGIC ============ */
+  function recalcTotal() {
+    const amountInput = document.getElementById('amountInput');
+    const totalInput = document.getElementById('totalInput');
+    const totalApprox = document.getElementById('totalApprox');
+    if (!amountInput || !totalInput) return;
+
+    const amount = parseFloat(amountInput.value) || 0;
+    const total = amount * (lastPrice || 0);
+    totalInput.value = fmt(total, 2);
+    if (totalApprox) totalApprox.textContent = '≈ ' + fmtUSD(total);
+  }
+
+  function initTradePanel() {
+    const amountInput = document.getElementById('amountInput');
+    const buyTab = document.getElementById('buyTab');
+    const sellTab = document.getElementById('sellTab');
+    const actionBtn = document.getElementById('actionBtn');
+    const percentBtns = document.querySelectorAll('.quick-percent button');
+    const maxBtc = 0.3854;
+    let mode = 'buy';
+
+    if (amountInput) amountInput.addEventListener('input', recalcTotal);
+
+    percentBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const pct = +btn.dataset.pct / 100;
+        if (amountInput) {
+          amountInput.value = (maxBtc * pct).toFixed(4);
+          recalcTotal();
+        }
+      });
+    });
+
+    function setMode(newMode) {
+      mode = newMode;
+      if (mode === 'buy') {
+        buyTab.classList.add('active-buy');
+        sellTab.classList.remove('active-sell');
+        actionBtn.className = 'action-btn buy-btn';
+        actionBtn.innerHTML = '<i class="fas fa-arrow-up"></i> Buy BTC';
+      } else {
+        sellTab.classList.add('active-sell');
+        buyTab.classList.remove('active-buy');
+        actionBtn.className = 'action-btn sell-btn';
+        actionBtn.innerHTML = '<i class="fas fa-arrow-down"></i> Sell BTC';
+      }
+    }
+
+    if (buyTab) buyTab.addEventListener('click', () => setMode('buy'));
+    if (sellTab) sellTab.addEventListener('click', () => setMode('sell'));
+
+    if (actionBtn) {
+      actionBtn.addEventListener('click', () => {
+        const amount = parseFloat(amountInput.value) || 0;
+        if (amount <= 0) {
+          showToast('Enter a valid amount', '#f6465d');
+          return;
+        }
+        showToast(`${mode === 'buy' ? 'Bought' : 'Sold'} ${amount} BTC at ${fmtUSD(lastPrice)}`, mode === 'buy' ? '#2cc98a' : '#f6465d');
+      });
+    }
+  }
+
+  /* ============ CHART TABS ============ */
+  function initChartTabs() {
+    const tabs = document.querySelectorAll('#chartTabs button');
+    tabs.forEach(btn => {
+      btn.addEventListener('click', () => {
+        tabs.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentInterval = btn.dataset.interval;
+        loadKlineHistory(currentInterval);
+        startKlineStream(currentInterval);
+      });
+    });
+  }
+
+  /* ============ INIT ============ */
+  document.addEventListener('DOMContentLoaded', () => {
+    initChart();
+    startTickerStream();
+    startDepthStream();
+    startTradesStream();
+    startWatchlistStream();
+    initTradePanel();
+    initChartTabs();
+  });
+})();
+</script>
+</body>
+</html>
