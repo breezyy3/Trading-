@@ -10,8 +10,6 @@
   *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}
   body{background:#0b0e14;color:#e9edf5;line-height:1.5;overflow-x:hidden}
   .app{display:flex;flex-direction:column;min-height:100vh}
-
-  /* ================= NAVBAR ================= */
   .navbar{display:flex;align-items:center;justify-content:space-between;padding:0 28px;height:72px;background:#0f131c;border-bottom:1px solid #1e2633;position:sticky;top:0;z-index:20}
   .logo-area{display:flex;align-items:center;gap:10px}
   .logo-icon{background:linear-gradient(135deg,#f7931a 0%,#ffb347 100%);width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#0b0e14;font-weight:700}
@@ -25,13 +23,9 @@
   .balance-chip i{color:#f7931a;margin-right:6px}
   .btn-primary{background:linear-gradient(135deg,#f7931a,#e07c0c);border:none;color:#0b0e14;font-weight:700;padding:10px 22px;border-radius:40px;font-size:.9rem;display:flex;align-items:center;gap:8px;cursor:pointer;transition:all .15s;box-shadow:0 8px 20px -6px rgba(247,147,26,.3)}
   .btn-primary:hover{background:#ffa52e;transform:translateY(-1px)}
-
-  /* ================= LAYOUT ================= */
   .main-grid{display:grid;grid-template-columns:1fr 340px;gap:20px;padding:24px 28px;max-width:1600px;margin:0 auto;width:100%}
   .left-col{display:flex;flex-direction:column;gap:20px;min-width:0}
   .right-col{display:flex;flex-direction:column;gap:20px}
-
-  /* ================= STATS ================= */
   .market-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
   .stat-card{background:#0f131c;border-radius:18px;padding:18px 20px;border:1px solid #1e2633;transition:border .15s}
   .stat-card:hover{border-color:#2d394d}
@@ -45,13 +39,9 @@
   .flash-down{animation:flashDown .6s ease-out}
   @keyframes flashUp{0%{background-color:rgba(44,201,138,.22)}100%{background-color:transparent}}
   @keyframes flashDown{0%{background-color:rgba(246,70,93,.22)}100%{background-color:transparent}}
-
-  /* ================= LIVE BADGE ================= */
   .live-indicator{display:inline-flex;align-items:center;gap:6px;font-size:.75rem;color:#2cc98a;font-weight:600;margin-left:10px}
   .live-dot{width:8px;height:8px;border-radius:50%;background:#2cc98a;animation:pulse 1.5s infinite}
   @keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(44,201,138,.7)}50%{opacity:.6;box-shadow:0 0 0 6px rgba(44,201,138,0)}}
-
-  /* ================= CHART ================= */
   .chart-container{background:#0f131c;border-radius:24px;padding:22px 24px 18px;border:1px solid #1e2633}
   .chart-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:10px}
   .asset-title{display:flex;align-items:center;gap:14px}
@@ -62,8 +52,6 @@
   .chart-tabs button{background:transparent;border:none;color:#98a9c0;font-weight:600;font-size:.8rem;padding:8px 16px;border-radius:40px;cursor:pointer;transition:all .15s}
   .chart-tabs button.active{background:#232e3f;color:#fff}
   #tvchart{width:100%;height:260px}
-
-  /* ================= DEPTH ================= */
   .market-depth{display:grid;grid-template-columns:1fr 1fr;gap:20px}
   .order-book,.recent-trades{background:#0f131c;border-radius:20px;padding:20px 20px 16px;border:1px solid #1e2633;min-width:0}
   .section-title{display:flex;justify-content:space-between;font-size:.9rem;font-weight:600;color:#b8c4d6;margin-bottom:18px;letter-spacing:.3px}
@@ -72,8 +60,6 @@
   .price-green{color:#2cc98a;font-weight:500}
   .price-red{color:#f6465d;font-weight:500}
   .amount{color:#b0bed2}
-
-  /* ================= TRADE PANEL ================= */
   .trade-panel{background:#0f131c;border-radius:24px;padding:24px;border:1px solid #1e2633}
   .panel-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}
   .panel-header h3{font-weight:600;font-size:1.1rem}
@@ -96,8 +82,6 @@
   .buy-btn:hover{background:#3eda99;transform:translateY(-2px)}
   .sell-btn:hover{background:#ff5b70;transform:translateY(-2px)}
   .balance-info{display:flex;justify-content:space-between;font-size:.8rem;color:#7a889b;margin-top:18px;padding-top:10px;border-top:1px solid #1e2633}
-
-  /* ================= WATCHLIST ================= */
   .watchlist{background:#0f131c;border-radius:24px;padding:20px;border:1px solid #1e2633}
   .watchlist-item{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #1a212e}
   .watchlist-item:last-child{border-bottom:none}
@@ -108,11 +92,7 @@
   .asset-price{text-align:right}
   .price-value{font-weight:600;font-size:.95rem;border-radius:4px;padding:0 4px;transition:background-color .3s}
   .price-change{font-size:.75rem;font-weight:500}
-
-  /* ================= TOAST ================= */
   .toast{position:fixed;bottom:30px;right:30px;background:#1a212e;color:#e9edf5;padding:14px 24px;border-radius:50px;border-left:4px solid #f7931a;box-shadow:0 10px 30px rgba(0,0,0,.5);font-weight:500;z-index:999;transition:opacity .3s,transform .3s}
-
-  /* ================= RESPONSIVE ================= */
   @media (max-width:1100px){
     .main-grid{grid-template-columns:1fr}
     .market-stats{grid-template-columns:repeat(2,1fr)}
@@ -133,7 +113,6 @@
 </head>
 <body>
 <div class="app">
-  <!-- ============ NAVBAR ============ -->
   <header class="navbar">
     <div class="logo-area">
       <div class="logo-icon">₿</div>
@@ -151,11 +130,8 @@
     </div>
   </header>
 
-  <!-- ============ MAIN ============ -->
   <div class="main-grid">
-    <!-- LEFT COLUMN -->
     <div class="left-col">
-      <!-- Market Stats -->
       <div class="market-stats">
         <div class="stat-card">
           <div class="stat-label">BTC/USDT <i class="fas fa-chevron-down small-icon"></i></div>
@@ -178,7 +154,6 @@
         </div>
       </div>
 
-      <!-- Live Chart -->
       <div class="chart-container">
         <div class="chart-header">
           <div class="asset-title">
@@ -199,26 +174,17 @@
         <div id="tvchart"></div>
       </div>
 
-      <!-- Order Book & Recent Trades -->
       <div class="market-depth">
         <div class="order-book">
-          <div class="section-title">
-            <span>Order Book</span>
-            <span>BTC (Amount)</span>
-          </div>
+          <div class="section-title"><span>Order Book</span><span>BTC (Amount)</span></div>
         </div>
         <div class="recent-trades">
-          <div class="section-title">
-            <span>Recent Trades</span>
-            <span>Time</span>
-          </div>
+          <div class="section-title"><span>Recent Trades</span><span>Time</span></div>
         </div>
       </div>
     </div>
 
-    <!-- RIGHT COLUMN -->
     <div class="right-col">
-      <!-- Trade Panel -->
       <div class="trade-panel">
         <div class="panel-header">
           <h3>Trade</h3>
@@ -229,10 +195,7 @@
         </div>
 
         <div class="input-group">
-          <div class="input-label">
-            <span>Amount</span>
-            <span>Balance: 0.3854 BTC</span>
-          </div>
+          <div class="input-label"><span>Amount</span><span>Balance: 0.3854 BTC</span></div>
           <div class="input-field">
             <input type="text" placeholder="0.00" value="0.025" id="amountInput" />
             <span>BTC</span>
@@ -254,10 +217,7 @@
         </div>
 
         <div class="input-group">
-          <div class="input-label">
-            <span>Total</span>
-            <span id="totalApprox">≈ $0.00</span>
-          </div>
+          <div class="input-label"><span>Total</span><span id="totalApprox">≈ $0.00</span></div>
           <div class="input-field">
             <input type="text" placeholder="0.00" id="totalInput" readonly />
             <span>USDT</span>
@@ -268,18 +228,11 @@
           <i class="fas fa-arrow-up"></i> Buy BTC
         </button>
 
-        <div class="balance-info">
-          <span>Available</span>
-          <span>$24,580.42</span>
-        </div>
+        <div class="balance-info"><span>Available</span><span>$24,580.42</span></div>
       </div>
 
-      <!-- Watchlist -->
       <div class="watchlist">
-        <div class="section-title">
-          <span>Watchlist</span>
-          <span><i class="fas fa-plus small-icon"></i></span>
-        </div>
+        <div class="section-title"><span>Watchlist</span><span><i class="fas fa-plus small-icon"></i></span></div>
 
         <div class="watchlist-item" data-symbol="BTCUSDT">
           <div class="asset-info">
@@ -328,26 +281,22 @@
     </div>
   </div>
 </div>
-
 <script>
 (function () {
   'use strict';
 
-  /* ============ CONFIG ============ */
   const SYMBOL = 'BTCUSDT';
   const REST_BASE = 'https://api.binance.com/api/v3';
   const WS_BASE = 'wss://stream.binance.com:9443/ws';
   const WS_COMBINED = 'wss://stream.binance.com:9443/stream?streams=';
 
-  /* ============ STATE ============ */
   let lastPrice = 0;
   let currentInterval = '1m';
   let candleSeries = null;
   let chart = null;
-  const sockets = { kline: null, depth: null, trades: null, ticker: null, watchlist: null };
+  const sockets = { kline: null, depth: null, trades: null, watchlist: null };
   let lastDepthRender = 0;
 
-  /* ============ HELPERS ============ */
   const fmt = (n, dec = 2) => Number(n).toLocaleString('en-US', { minimumFractionDigits: dec, maximumFractionDigits: dec });
   const fmtUSD = (n, dec = 2) => '$' + fmt(n, dec);
 
@@ -378,13 +327,11 @@
   function initChart(retries = 0) {
     const container = document.getElementById('tvchart');
     if (!container) return;
-
     if (typeof LightweightCharts === 'undefined') {
-      if (retries < 10) return setTimeout(() => initChart(retries + 1), 400);
+      if (retries < 12) return setTimeout(() => initChart(retries + 1), 400);
       console.warn('Chart library failed to load');
       return;
     }
-
     chart = LightweightCharts.createChart(container, {
       layout: { background: { color: '#0f131c' }, textColor: '#b8c4d6', fontSize: 11 },
       grid: { vertLines: { color: '#1a212e' }, horzLines: { color: '#1a212e' } },
@@ -392,16 +339,13 @@
       rightPriceScale: { borderColor: '#1e2633', scaleMargins: { top: 0.1, bottom: 0.1 } },
       crosshair: { mode: LightweightCharts.CrosshairMode.Normal }
     });
-
     candleSeries = chart.addCandlestickSeries({
       upColor: '#2cc98a', downColor: '#f6465d',
       borderUpColor: '#2cc98a', borderDownColor: '#f6465d',
       wickUpColor: '#2cc98a', wickDownColor: '#f6465d'
     });
-
     loadKlineHistory(currentInterval);
     startKlineStream(currentInterval);
-
     window.addEventListener('resize', () => chart.applyOptions({ width: container.clientWidth }));
   }
 
@@ -420,279 +364,241 @@
   function startKlineStream(interval) {
     safeClose(sockets.kline);
     const ws = sockets.kline = new WebSocket(`${WS_BASE}/${SYMBOL.toLowerCase()}@kline_${interval}`);
-
-    ws.onmessage = (event) => {
-      try {
-        const data = JSON.parse(event.data);
-        const k = data.k;
-        if (candleSeries && k) {
-          candleSeries.update({
-            time: k.t / 1000,
-            open: +k.o, high: +k.h, low: +k.l, close: +k.c
-          });
-        }
-      } catch (e) { console.warn('kline stream parse failed', e); }
+    ws.onmessage = (ev) => {
+      const k = JSON.parse(ev.data).k;
+      candleSeries.update({
+        time: k.t / 1000,
+        open: +k.o, high: +k.h, low: +k.l, close: +k.c
+      });
     };
-
-    ws.onerror = () => console.warn('Kline WebSocket error');
+    ws.onclose = () => setTimeout(() => startKlineStream(interval), 3000);
   }
 
-  /* ============ TICKER / STATS ============ */
-  function startTickerStream() {
-    safeClose(sockets.ticker);
-    const ws = sockets.ticker = new WebSocket(`${WS_BASE}/${SYMBOL.toLowerCase()}@ticker`);
+  document.getElementById('chartTabs').addEventListener('click', (e) => {
+    const btn = e.target.closest('button');
+    if (!btn || btn.classList.contains('active')) return;
+    document.querySelectorAll('#chartTabs button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentInterval = btn.dataset.interval;
+    loadKlineHistory(currentInterval);
+    startKlineStream(currentInterval);
+  });
 
-    ws.onmessage = (event) => {
-      try {
-        const t = JSON.parse(event.data);
-        const price = +t.c;
-        const changePct = +t.P;
-        const high = +t.h;
-        const low = +t.l;
-        const volume = +t.q;
+  /* ============ LIVE PRICE ============ */
+  function startPriceStream() {
+    const ws = new WebSocket(`${WS_BASE}/${SYMBOL.toLowerCase()}@trade`);
+    ws.onmessage = (ev) => {
+      const d = JSON.parse(ev.data);
+      const price = +d.p;
+      const dir = lastPrice ? (price >= lastPrice ? 'up' : 'down') : null;
+      lastPrice = price;
 
-        const priceEl = document.getElementById('btcPrice');
-        const changeEl = document.getElementById('btcChange');
-        const cardEl = document.getElementById('btcPriceCard');
-        const priceInput = document.getElementById('priceInput');
+      const priceEl = document.getElementById('btcPrice');
+      if (priceEl) {
+        priceEl.textContent = fmtUSD(price);
+        if (dir) flash(document.getElementById('btcPriceCard'), dir);
+      }
+      const priceInput = document.getElementById('priceInput');
+      if (priceInput) priceInput.value = fmt(price);
 
-        if (priceEl) {
-          priceEl.textContent = fmtUSD(price);
-          if (lastPrice && price !== lastPrice) {
-            flash(cardEl, price > lastPrice ? 'up' : 'down');
-          }
-          lastPrice = price;
-        }
-
-        if (changeEl) {
-          changeEl.textContent = (changePct >= 0 ? '+' : '') + changePct.toFixed(2) + '%';
-          changeEl.className = 'stat-change ' + (changePct >= 0 ? 'positive' : 'negative');
-        }
-
-        const volEl = document.getElementById('btcVolume');
-        const highEl = document.getElementById('btcHigh');
-        const lowEl = document.getElementById('btcLow');
-        if (volEl) volEl.textContent = '$' + (volume / 1e9).toFixed(2) + 'B';
-        if (highEl) highEl.textContent = '$' + fmt(high, 0);
-        if (lowEl) lowEl.textContent = '$' + fmt(low, 0);
-
-        if (priceInput) priceInput.value = fmt(price, 2);
-        recalcTotal();
-      } catch (e) { console.warn('ticker parse failed', e); }
+      updateWatchlistRow('BTCUSDT', price, null);
+      recalcTotal();
     };
+    ws.onclose = () => setTimeout(startPriceStream, 3000);
+  }
 
-    ws.onerror = () => console.warn('Ticker WebSocket error');
+  async function refresh24hStats() {
+    try {
+      const res = await fetch(`${REST_BASE}/ticker/24hr?symbol=${SYMBOL}`);
+      const d = await res.json();
+      document.getElementById('btcVolume').textContent = `$${(+d.quoteVolume / 1e9).toFixed(2)}B`;
+      document.getElementById('btcHigh').textContent = fmtUSD(+d.highPrice, 0);
+      document.getElementById('btcLow').textContent = fmtUSD(+d.lowPrice, 0);
+      const changeEl = document.getElementById('btcChange');
+      if (changeEl) {
+        const pct = +d.priceChangePercent;
+        changeEl.textContent = (pct >= 0 ? '+' : '') + pct.toFixed(2) + '%';
+        changeEl.className = 'stat-change ' + (pct >= 0 ? 'positive' : 'negative');
+      }
+    } catch (e) { console.warn('24h stats failed', e); }
   }
 
   /* ============ ORDER BOOK ============ */
   function startDepthStream() {
     safeClose(sockets.depth);
-    const ws = sockets.depth = new WebSocket(`${WS_BASE}/${SYMBOL.toLowerCase()}@depth20@1000ms`);
-
-    ws.onmessage = (event) => {
-      const now = Date.now();
-      if (now - lastDepthRender < 300) return;
+    const ws = sockets.depth = new WebSocket(`${WS_BASE}/${SYMBOL.toLowerCase()}@depth20@100ms`);
+    ws.onmessage = (ev) => {
+      const now = performance.now();
+      if (now - lastDepthRender < 200) return;
       lastDepthRender = now;
-
-      try {
-        const data = JSON.parse(event.data);
-        renderOrderBook(data.bids || [], data.asks || []);
-      } catch (e) { console.warn('depth parse failed', e); }
+      const d = JSON.parse(ev.data);
+      renderOrderBook(d.bids.slice(0, 7), d.asks.slice(0, 7));
     };
-
-    ws.onerror = () => console.warn('Depth WebSocket error');
+    ws.onclose = () => setTimeout(startDepthStream, 3000);
   }
 
   function renderOrderBook(bids, asks) {
-    const bookEl = document.querySelector('.order-book');
-    if (!bookEl) return;
+    const book = document.querySelector('.order-book');
+    if (!book) return;
+    book.querySelectorAll('.order-row').forEach(r => r.remove());
+    const maxQty = Math.max(...bids.map(b => +b[1]), ...asks.map(a => +a[1]), 0.0001);
 
-    const rows = [];
-    asks.slice(0, 8).reverse().forEach(([price, amount]) => {
-      rows.push(`<div class="order-row"><span class="price-red">${fmt(+price, 2)}</span><span class="amount">${(+amount).toFixed(4)}</span></div>`);
-    });
-    bids.slice(0, 8).forEach(([price, amount]) => {
-      rows.push(`<div class="order-row"><span class="price-green">${fmt(+price, 2)}</span><span class="amount">${(+amount).toFixed(4)}</span></div>`);
-    });
-
-    bookEl.innerHTML = `
-      <div class="section-title"><span>Order Book</span><span>BTC (Amount)</span></div>
-      ${rows.join('')}
-    `;
+    const buildRow = (price, qty, isAsk) => {
+      const width = Math.min(100, (qty / maxQty) * 100);
+      const color = isAsk ? 'rgba(246,70,93,.08)' : 'rgba(44,201,138,.08)';
+      const row = document.createElement('div');
+      row.className = 'order-row';
+      row.style.background = `linear-gradient(to left, ${color} ${width}%, transparent ${width}%)`;
+      row.innerHTML = `
+        <span class="${isAsk ? 'price-red' : 'price-green'}">${fmt(price)}</span>
+        <span class="amount">${qty.toFixed(4)}</span>`;
+      return row;
+    };
+    [...asks].reverse().forEach(([p, q]) => book.appendChild(buildRow(+p, +q, true)));
+    bids.forEach(([p, q]) => book.appendChild(buildRow(+p, +q, false)));
   }
 
   /* ============ RECENT TRADES ============ */
   function startTradesStream() {
     safeClose(sockets.trades);
+    const container = document.querySelector('.recent-trades');
+    if (!container) return;
+    container.querySelectorAll('.trade-row').forEach(r => r.remove());
     const ws = sockets.trades = new WebSocket(`${WS_BASE}/${SYMBOL.toLowerCase()}@trade`);
-    const tradesBuffer = [];
-
-    ws.onmessage = (event) => {
-      try {
-        const t = JSON.parse(event.data);
-        const price = +t.p;
-        const qty = +t.q;
-        const isBuyerMaker = t.m;
-        const time = new Date(t.T).toLocaleTimeString('en-US', { hour12: false });
-
-        tradesBuffer.unshift({ price, qty, isBuyerMaker, time });
-        if (tradesBuffer.length > 12) tradesBuffer.pop();
-
-        renderTrades(tradesBuffer);
-      } catch (e) { console.warn('trade parse failed', e); }
+    ws.onmessage = (ev) => {
+      const d = JSON.parse(ev.data);
+      const isSell = d.m === true;
+      const time = new Date(d.T).toLocaleTimeString('en-US', { hour12: false });
+      const row = document.createElement('div');
+      row.className = 'trade-row';
+      row.innerHTML = `
+        <span class="${isSell ? 'price-red' : 'price-green'}">${fmt(+d.p)}</span>
+        <span class="amount">${(+d.q).toFixed(4)}</span>
+        <span class="amount">${time}</span>`;
+      container.appendChild(row);
+      while (container.querySelectorAll('.trade-row').length > 7) {
+        container.querySelector('.trade-row').remove();
+      }
     };
-
-    ws.onerror = () => console.warn('Trades WebSocket error');
-  }
-
-  function renderTrades(trades) {
-    const el = document.querySelector('.recent-trades');
-    if (!el) return;
-
-    const rows = trades.map(t => `
-      <div class="trade-row">
-        <span class="${t.isBuyerMaker ? 'price-red' : 'price-green'}">${fmt(t.price, 2)}</span>
-        <span class="amount">${t.qty.toFixed(4)}</span>
-        <span class="amount">${t.time}</span>
-      </div>
-    `).join('');
-
-    el.innerHTML = `
-      <div class="section-title"><span>Recent Trades</span><span>Time</span></div>
-      ${rows}
-    `;
+    ws.onclose = () => setTimeout(startTradesStream, 3000);
   }
 
   /* ============ WATCHLIST ============ */
   function startWatchlistStream() {
     safeClose(sockets.watchlist);
-    const symbols = ['btcusdt', 'ethusdt', 'solusdt', 'bnbusdt'];
-    const streams = symbols.map(s => `${s}@ticker`).join('/');
-    const ws = sockets.watchlist = new WebSocket(WS_COMBINED + streams);
-
-    ws.onmessage = (event) => {
-      try {
-        const msg = JSON.parse(event.data);
-        const t = msg.data;
-        if (!t) return;
-
-        const symbol = t.s;
-        const price = +t.c;
-        const changePct = +t.P;
-
-        const item = document.querySelector(`.watchlist-item[data-symbol="${symbol}"]`);
-        if (!item) return;
-
-        const priceEl = item.querySelector('.price-value');
-        const changeEl = item.querySelector('.price-change');
-
-        if (priceEl) {
-          const dec = price < 10 ? 2 : (price < 1000 ? 2 : 0);
-          const oldText = priceEl.textContent;
-          priceEl.textContent = '$' + fmt(price, dec);
-          if (oldText !== priceEl.textContent && oldText.indexOf('-') === -1) {
-            const oldVal = parseFloat(oldText.replace(/[^0-9.]/g, ''));
-            flash(priceEl, price >= oldVal ? 'up' : 'down');
-          }
-        }
-        if (changeEl) {
-          changeEl.textContent = (changePct >= 0 ? '+' : '') + changePct.toFixed(2) + '%';
-          changeEl.className = 'price-change ' + (changePct >= 0 ? 'positive' : 'negative');
-        }
-      } catch (e) { console.warn('watchlist parse failed', e); }
+    const streams = ['btcusdt', 'ethusdt', 'solusdt', 'bnbusdt'].map(s => `${s}@ticker`).join('/');
+    const ws = sockets.watchlist = new WebSocket(`${WS_COMBINED}${streams}`);
+    ws.onmessage = (ev) => {
+      const { data } = JSON.parse(ev.data);
+      if (!data || !data.s) return;
+      updateWatchlistRow(data.s, +data.c, +data.P);
     };
-
-    ws.onerror = () => console.warn('Watchlist WebSocket error');
+    ws.onclose = () => setTimeout(startWatchlistStream, 3000);
   }
 
-  /* ============ TRADE PANEL LOGIC ============ */
+  function updateWatchlistRow(symbol, price, pct) {
+    const item = document.querySelector(`.watchlist-item[data-symbol="${symbol}"]`);
+    if (!item) return;
+    const priceEl = item.querySelector('.price-value');
+    const changeEl = item.querySelector('.price-change');
+    if (!priceEl) return;
+    const prev = +priceEl.dataset.prev || 0;
+    const dir = prev ? (price >= prev ? 'up' : 'down') : null;
+    priceEl.dataset.prev = price;
+    priceEl.textContent = price >= 1000 ? fmtUSD(price, 0) : fmtUSD(price, 2);
+    if (dir) flash(priceEl, dir);
+    if (pct !== null && changeEl && !isNaN(pct)) {
+      changeEl.textContent = (pct >= 0 ? '+' : '') + pct.toFixed(2) + '%';
+      changeEl.className = 'price-change ' + (pct >= 0 ? 'positive' : 'negative');
+    }
+  }
+
+  async function seedWatchlist() {
+    try {
+      const res = await fetch(`${REST_BASE}/ticker/24hr?symbols=%5B%22BTCUSDT%22,%22ETHUSDT%22,%22SOLUSDT%22,%22BNBUSDT%22%5D`);
+      const data = await res.json();
+      data.forEach(d => updateWatchlistRow(d.symbol, +d.lastPrice, +d.priceChangePercent));
+    } catch (e) { console.warn('watchlist seed failed', e); }
+  }
+
+  /* ============ TRADE PANEL ============ */
+  const amountInput = document.getElementById('amountInput');
+  const priceInput = document.getElementById('priceInput');
+  const totalInput = document.getElementById('totalInput');
+  const totalApprox = document.getElementById('totalApprox');
+  const buyTab = document.getElementById('buyTab');
+  const sellTab = document.getElementById('sellTab');
+  const actionBtn = document.getElementById('actionBtn');
+
   function recalcTotal() {
-    const amountInput = document.getElementById('amountInput');
-    const totalInput = document.getElementById('totalInput');
-    const totalApprox = document.getElementById('totalApprox');
-    if (!amountInput || !totalInput) return;
-
-    const amount = parseFloat(amountInput.value) || 0;
-    const total = amount * (lastPrice || 0);
-    totalInput.value = fmt(total, 2);
-    if (totalApprox) totalApprox.textContent = '≈ ' + fmtUSD(total);
+    const amt = parseFloat(amountInput?.value) || 0;
+    const price = parseFloat((priceInput?.value || '').replace(/,/g, '')) || 0;
+    const total = amt * price;
+    if (totalInput) totalInput.value = fmt(total);
+    if (totalApprox) totalApprox.textContent = `≈ ${fmtUSD(total)}`;
   }
 
-  function initTradePanel() {
-    const amountInput = document.getElementById('amountInput');
-    const buyTab = document.getElementById('buyTab');
-    const sellTab = document.getElementById('sellTab');
-    const actionBtn = document.getElementById('actionBtn');
-    const percentBtns = document.querySelectorAll('.quick-percent button');
-    const maxBtc = 0.3854;
-    let mode = 'buy';
+  amountInput?.addEventListener('input', recalcTotal);
+  priceInput?.addEventListener('input', recalcTotal);
 
-    if (amountInput) amountInput.addEventListener('input', recalcTotal);
-
-    percentBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const pct = +btn.dataset.pct / 100;
-        if (amountInput) {
-          amountInput.value = (maxBtc * pct).toFixed(4);
-          recalcTotal();
-        }
-      });
+  document.querySelectorAll('.quick-percent button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const pct = +btn.dataset.pct;
+      const balance = 0.3854;
+      amountInput.value = (balance * pct / 100).toFixed(4);
+      recalcTotal();
     });
+  });
 
-    function setMode(newMode) {
-      mode = newMode;
-      if (mode === 'buy') {
-        buyTab.classList.add('active-buy');
-        sellTab.classList.remove('active-sell');
-        actionBtn.className = 'action-btn buy-btn';
-        actionBtn.innerHTML = '<i class="fas fa-arrow-up"></i> Buy BTC';
-      } else {
-        sellTab.classList.add('active-sell');
-        buyTab.classList.remove('active-buy');
-        actionBtn.className = 'action-btn sell-btn';
-        actionBtn.innerHTML = '<i class="fas fa-arrow-down"></i> Sell BTC';
-      }
-    }
-
-    if (buyTab) buyTab.addEventListener('click', () => setMode('buy'));
-    if (sellTab) sellTab.addEventListener('click', () => setMode('sell'));
-
-    if (actionBtn) {
-      actionBtn.addEventListener('click', () => {
-        const amount = parseFloat(amountInput.value) || 0;
-        if (amount <= 0) {
-          showToast('Enter a valid amount', '#f6465d');
-          return;
-        }
-        showToast(`${mode === 'buy' ? 'Bought' : 'Sold'} ${amount} BTC at ${fmtUSD(lastPrice)}`, mode === 'buy' ? '#2cc98a' : '#f6465d');
-      });
+  function setActiveTab(mode) {
+    if (mode === 'buy') {
+      buyTab.classList.add('active-buy'); buyTab.classList.remove('active-sell');
+      sellTab.classList.remove('active-buy', 'active-sell');
+      actionBtn.className = 'action-btn buy-btn';
+      actionBtn.innerHTML = '<i class="fas fa-arrow-up"></i> Buy BTC';
+    } else {
+      sellTab.classList.add('active-sell'); sellTab.classList.remove('active-buy');
+      buyTab.classList.remove('active-buy', 'active-sell');
+      actionBtn.className = 'action-btn sell-btn';
+      actionBtn.innerHTML = '<i class="fas fa-arrow-down"></i> Sell BTC';
     }
   }
+  buyTab?.addEventListener('click', () => setActiveTab('buy'));
+  sellTab?.addEventListener('click', () => setActiveTab('sell'));
 
-  /* ============ CHART TABS ============ */
-  function initChartTabs() {
-    const tabs = document.querySelectorAll('#chartTabs button');
-    tabs.forEach(btn => {
-      btn.addEventListener('click', () => {
-        tabs.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        currentInterval = btn.dataset.interval;
-        loadKlineHistory(currentInterval);
-        startKlineStream(currentInterval);
-      });
+  actionBtn?.addEventListener('click', () => {
+    const isBuy = actionBtn.classList.contains('buy-btn');
+    const amt = amountInput?.value || '0';
+    const total = totalInput?.value || '0';
+    showToast(
+      `${isBuy ? '✓ Buy' : '✓ Sell'} order placed — ${amt} BTC ≈ $${total}`,
+      isBuy ? '#2cc98a' : '#f6465d'
+    );
+  });
+
+  /* ============ NAV ============ */
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.addEventListener('click', (e) => {
+      e.preventDefault();
+      document.querySelectorAll('.nav-links a').forEach(x => x.classList.remove('active'));
+      a.classList.add('active');
     });
-  }
+  });
 
-  /* ============ INIT ============ */
-  document.addEventListener('DOMContentLoaded', () => {
+  /* ============ BOOT ============ */
+  window.addEventListener('DOMContentLoaded', () => {
     initChart();
-    startTickerStream();
+    startPriceStream();
     startDepthStream();
     startTradesStream();
     startWatchlistStream();
-    initTradePanel();
-    initChartTabs();
+    seedWatchlist();
+    refresh24hStats();
+    setInterval(refresh24hStats, 30000);
+    recalcTotal();
   });
+
+  window.addEventListener('beforeunload', () => Object.values(sockets).forEach(safeClose));
 })();
 </script>
 </body>
